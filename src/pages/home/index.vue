@@ -69,7 +69,7 @@ export default {
 .home-container {
   .mint-swipe {
     height: 200px;
-    background-color: pink;
+   
     .mint-swipe-item {
       img {
         width: 100%;
