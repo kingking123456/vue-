@@ -7,6 +7,7 @@ import searchComponent from '../pages/search'
 import shopcarComponent from '../pages/shopcar'
 import newlistComponent from '../pages/newlist'
 import newinfoComponent from '../pages/newinfo'
+import photoComponent from '../pages/photolist'
 Vue.use(Router)
 
 export default new Router({
@@ -17,7 +18,8 @@ export default new Router({
     { path: '/search', component: searchComponent },
     { path: '/shopcar', component: shopcarComponent },
     { path: '/home/newlist', component: newlistComponent },
-    { path: '/home/newinfo/:id', component: newinfoComponent }
+    { path: '/home/newinfo/:id', component: newinfoComponent },
+    { path: '/home/photolist',component: photoComponent }
 
 
 
