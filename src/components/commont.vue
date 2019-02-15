@@ -2,8 +2,8 @@
   <div class="commont-container">
     <h3>发表评论</h3>
     <hr>
-    <textarea placeholder="请输入要评论的内容(最多120个字)" maxlength="120"></textarea>
-    <mt-button type="primary" size="large">发表评论</mt-button>
+    <textarea placeholder="请输入要评论的内容(最多120个字)" maxlength="120" v-model="msg"></textarea>
+    <mt-button type="primary" size="large" @click="postCommont">发表评论</mt-button>
     <div class="commont-list">
       <div class="commont-item" v-for="(item,i) in commots" :key="i">
         <div class="commont-title">
@@ -23,7 +23,8 @@ export default {
   data() {
     return {
       pageIndex: 1, //默认展示第一页面数据
-      commots: []
+      commots: [],
+      msg:''
     };
   },
   created() {
@@ -34,17 +35,39 @@ export default {
       this.$http
         .get("getcomments/" + this.id + "?pageindex=" + this.pageIndex)
         .then(result => {
-          console.log(result.body.message);
+         // console.log(result.body.message)
           if (result.body.status === 0) {
-            this.commots = result.body.message;
+            this.commots = this.commots.concat(result.body.message)
           } else {
-            Toast("获取评论失败了");
+            Toast("获取评论失败了")
           }
         });
     },
     getMore() {
       this.pageIndex++, 
       this.getCommont()
+    },
+    postCommont(){
+        console.log(1111)
+        if(this.msg.trim().length==0) return Toast("评论数据不能为空")
+        this.$http.post('postcomment/'+this.id,{
+          content:this.msg.trim()
+        }).then(result=>{
+          console.log(result)
+         if(result.body.status==0)
+              // var addCon ={
+              //   user_name:"匿名用户",
+              //   add_time:Date.now(),
+              //   content:this.msg.trim()
+              // }
+              // this.commots.unshift(addCon)
+              this.commots=[]
+              this.getCommont()
+              this.pageIndex=1
+              this.msg=''
+             
+          return Toast(result.body.message)
+        })
     }
   },
 

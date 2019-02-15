@@ -26,6 +26,8 @@ Vue.filter('dataFormat', function (message, patter = "YYYY:MM:DD HH:ss:mm") {
 //全局注册评论组件
 import commont from './components/commont.vue'
 Vue.component('commont',commont)
+//指定post传递参数的格式
+Vue.http.options.emulateJSON = true;
 
 
 
