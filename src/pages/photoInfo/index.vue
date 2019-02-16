@@ -7,9 +7,15 @@
     </div>
     <hr>
     <!-- 缩列图 -->
-    <div class="thumbs">
-       <img :src="item.src" v-for="item in photoInfoList" :key="item.id">
-    </div>
+    <img
+      class="preview-img"
+      v-for="(item, index) in photoInfoList"
+      :key="index"
+      :src="item.src"
+      height="100"
+      @click="$preview.open(index, photoInfoList)"
+    >
+
     <!-- 内容区域 -->
     <div class="content" v-html="photoInfo.content"></div>
     <!-- 评论区域 -->
@@ -22,30 +28,36 @@ export default {
     return {
       id: this.$route.params.id,
       photoInfo: {},
-      photoInfoList:[]
+      photoInfoList: []
     };
   },
   created() {
-    this.getphotoInfo()
-    this.getphotoInfoList()
+    this.getphotoInfo();
+    this.getphotoInfoList();
     //console.log(this.$route)
   },
   methods: {
     getphotoInfo() {
       this.$http.get("getimageInfo/" + this.id).then(result => {
-       // console.log(result.body);
+        // console.log(result.body);
         if (result.body.status == 0) {
           this.photoInfo = result.body.message[0];
         }
       });
     },
-    getphotoInfoList(){
-        this.$http.get('getthumimages/'+this.id).then(result=>{
-            console.log(result.body)
-            if(result.body.status==0){
-                this.photoInfoList=result.body.message
-            }
-        })
+    getphotoInfoList() {
+      this.$http.get("getthumimages/" + this.id).then(result => {
+        console.log(result.body);
+        if (result.body.status == 0) {
+          this.photoInfoList = result.body.message;
+          for(let i=0;i<this.photoInfoList.length;i++){
+              this.photoInfoList[i].w=600
+              this.photoInfoList[i].h=400
+          }
+        }else{
+            this.photoInfoList=[]
+          }
+      });
     }
   }
 };
@@ -59,19 +71,18 @@ export default {
     text-align: center;
     margin: 15px 0;
   }
-  .subtitle{
-      display: flex;
-      justify-content: space-between;
-      font-size: 13px;
-
+  .subtitle {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
   }
-  .thumbs{
-      img{
-        margin: 10px;
-        width: 100%;
-        display: block;
-        box-shadow: 0 0 8px #999
-      }
+  .preview-img {
+    img {
+      margin: 10px;
+      width: 100%;
+      display: block;
+      box-shadow: 0 0 8px #999;
+    }
   }
   .content {
     font-size: 13px;

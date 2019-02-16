@@ -28,6 +28,9 @@ import commont from './components/commont.vue'
 Vue.component('commont',commont)
 //指定post传递参数的格式
 Vue.http.options.emulateJSON = true;
+//导入全局缩列图组件
+import VuePreview from 'vue-pic-preview'
+Vue.use(VuePreview)
 
 
 
