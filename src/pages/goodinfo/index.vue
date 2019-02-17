@@ -20,9 +20,12 @@
           </p>
           <div class="goodinfo-num">
             <span class="goodinfo-title">购买数量&nbsp;:</span>&nbsp;
-            <input type="button" value="-">
-            <input type="button" v-model="byCount">
-            <input type="button" value="+">
+            <input type="button" value="-" @click="byCount>=2 && byCount--">
+            <input type="number" v-model="byCount" class="good-info-input"  @change="MaxCount">
+            <input type="button" value="+" 
+            @click="byCount<goodInfo.stock_quantity&&byCount++"
+           
+            >
           </div>
           <div class="mui-card-footer gooinfo-now">
             <mt-button type="primary" size="small">立即购买</mt-button>
@@ -82,6 +85,11 @@ export default {
           this.goodInfo = result.body.message[0];
         }
       });
+    },
+    MaxCount(){
+        if(this.byCount>this.goodInfo.stock_quantity){
+            this.byCount=this.goodInfo.stock_quantity
+        }
     }
   }
 };
@@ -101,7 +109,13 @@ export default {
       font-size: 13px;
     }
     input {
-      line-height: 18px;
+      height: 34px;
+      font-size: 13px;
+    }
+    .good-info-input {
+      width: 60px;
+      text-align: center;
+      margin-bottom: 0px;
     }
   }
   .gooinfo-now {
