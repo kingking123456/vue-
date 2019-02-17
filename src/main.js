@@ -26,6 +26,9 @@ Vue.filter('dataFormat', function (message, patter = "YYYY:MM:DD HH:ss:mm") {
 //全局注册评论组件
 import commont from './components/commont.vue'
 Vue.component('commont',commont)
+//定义全局轮播图组件
+import swiper from './components/swiper.vue'
+Vue.component('swiper',swiper)
 //指定post传递参数的格式
 Vue.http.options.emulateJSON = true;
 //导入全局缩列图组件
