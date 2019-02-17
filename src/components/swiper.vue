@@ -2,7 +2,7 @@
   <div class="swiper-container">
     <mt-swipe :auto="3000">
       <mt-swipe-item v-for="(item,index) in bannerSwipe" :key="index">
-        <img :src="item.img" alt>
+        <img :src="item.img" :class="{full:isfull}">
       </mt-swipe-item>
     </mt-swipe>
   </div>
@@ -19,6 +19,7 @@ export default {
 .swiper-container {
   .mint-swipe {
     height: 200px;
+    text-align: center;
 
     .mint-swipe-item {
       img {
@@ -28,7 +29,7 @@ export default {
     }
   }
 }
-.isfull{
+.full{
     width:100%
 }
 </style>

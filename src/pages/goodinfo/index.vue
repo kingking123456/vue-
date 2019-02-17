@@ -4,7 +4,7 @@
     <div class="mui-card">
       <div class="mui-card-content">
         <div class="mui-card-content-inner">
-          <swiper :bannerSwipe="goodInfoSwiper" :isfull="false"></swiper>
+          <swiper :bannerSwipe="goodInfoSwiper"></swiper>
         </div>
       </div>
     </div>
@@ -13,15 +13,39 @@
       <div class="mui-card-header">{{goodInfo.title}}</div>
       <div class="mui-card-content">
         <div class="mui-card-content-inner">
-            <p>
-                市场价:<del>￥{{goodInfo.market_price}}</del>&nbsp;&nbsp;
-                    <span>{{goodInfo.sell_price}}</span>
-            </p>
-             <p>购买数量：<numbox></numbox>
-             </p>
+          <p>
+            市场价:
+            <del>￥{{goodInfo.market_price}}</del>&nbsp;&nbsp;
+            <span class="goodinfo-now">{{goodInfo.sell_price}}</span>
+          </p>
+          <div class="goodinfo-num">
+            <span class="goodinfo-title">购买数量&nbsp;:</span>&nbsp;
+            <input type="button" value="-">
+            <input type="button" v-model="byCount">
+            <input type="button" value="+">
+          </div>
+          <div class="mui-card-footer gooinfo-now">
+            <mt-button type="primary" size="small">立即购买</mt-button>
+            <mt-button type="danger" size="small" class="goodcar">加入购物车</mt-button>
+          </div>
         </div>
       </div>
-      <div class="mui-card-footer"></div>
+    </div>
+    <!-- 商品详情区域 -->
+    <div class="mui-card">
+      <div class="mui-card-header">商品参数</div>
+      <!--内容区-->
+      <div class="mui-card-content">
+        <div class="mui-card-content-inner">
+          <p>货品商号:{{goodInfo.goods_no}}</p>
+          <p>库存情况:{{goodInfo.stock_quantity}}件</p>
+          <p>上架时间：{{ goodInfo.add_time | dataFormat }}</p>
+        </div>
+      </div>
+      <div class="mui-card-footer">
+        <mt-button type="primary" size="large" plain>图文介绍</mt-button>
+        <mt-button type="danger" size="large" plain>商品评论</mt-button>
+      </div>
     </div>
   </div>
 </template>
@@ -31,7 +55,8 @@ export default {
     return {
       id: this.$route.params.id,
       goodInfoSwiper: [],
-      goodInfo: {}
+      goodInfo: {},
+      byCount: 1
     };
   },
 
@@ -61,3 +86,32 @@ export default {
   }
 };
 </script>
+<style lang="less" scoped>
+.goodinfo-container {
+  background-color: #eee;
+
+  .goodinfo-now {
+    color: red;
+  }
+  .goodinfo-num {
+    display: flex;
+    height: 50px;
+    align-items: center;
+    .goodinfo-title {
+      font-size: 13px;
+    }
+    input {
+      line-height: 18px;
+    }
+  }
+  .gooinfo-now {
+    justify-content: start;
+    margin: 0;
+    padding: 0;
+    .goodcar {
+      margin-left: 3px;
+      box-sizing: content-box;
+    }
+  }
+}
+</style>
