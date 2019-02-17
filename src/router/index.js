@@ -11,6 +11,8 @@ import photoComponent from '../pages/photolist'
 import photoinfoComponent from '../pages/photoInfo'
 import goodlistComponent from '../pages/goodlist'
 import goodinfoComponent from '../pages/goodinfo'
+import gooddetailComponent from '../pages/gooddetail'
+import goodcommontComponent from '../pages/goodcommont'
 Vue.use(Router)
 
 export default new Router({
@@ -26,6 +28,8 @@ export default new Router({
     { path: '/home/photoinfo/:id', component: photoinfoComponent },
     { path: '/home/goodlist/', component: goodlistComponent },
     { path: '/home/goodinfo/:id', component: goodinfoComponent },
+    { path: '/home/gooddetail/:id', component: gooddetailComponent },
+    { path: '/home/goodcommont/:id', component: goodcommontComponent },
 
 
 

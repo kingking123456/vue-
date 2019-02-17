@@ -1,5 +1,9 @@
 <template>
   <div class="goodinfo-container">
+       <header class="mui-bar mui-bar-nav">
+      <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="/goodlist"></a>
+      <h1 class="mui-title">商品详情</h1>
+    </header>
     <!-- 轮播图区域 -->
     <div class="mui-card">
       <div class="mui-card-content">
@@ -29,7 +33,7 @@
           </div>
           <div class="mui-card-footer gooinfo-now">
             <mt-button type="primary" size="small">立即购买</mt-button>
-            <mt-button type="danger" size="small" class="goodcar">加入购物车</mt-button>
+            <mt-button type="danger" size="small" class="goodcar" @click="goodCarShop(id)">加入购物车</mt-button>
           </div>
         </div>
       </div>
@@ -46,8 +50,8 @@
         </div>
       </div>
       <div class="mui-card-footer">
-        <mt-button type="primary" size="large" plain>图文介绍</mt-button>
-        <mt-button type="danger" size="large" plain>商品评论</mt-button>
+        <mt-button type="primary" size="large" plain @click="getGoodDetail(id)">图文介绍</mt-button>
+        <mt-button type="danger" size="large" plain  @click="getGoodCommont(id)">商品评论</mt-button>
       </div>
     </div>
   </div>
@@ -80,7 +84,7 @@ export default {
     },
     getGoodInfo() {
       this.$http.get("goods/getinfo/" + this.id).then(result => {
-        console.log(result.body);
+      //  console.log(result.body);
         if (result.body.status == 0) {
           this.goodInfo = result.body.message[0];
         }
@@ -90,7 +94,17 @@ export default {
         if(this.byCount>this.goodInfo.stock_quantity){
             this.byCount=this.goodInfo.stock_quantity
         }
+    },
+    goodCarShop(id){
+       
+    },
+    getGoodDetail(id){
+        this.$router.push('/home/gooddetail/'+id)
+    },
+    getGoodCommont(id){
+        this.$router.push('/home/goodcommont/'+id)
     }
+    
   }
 };
 </script>

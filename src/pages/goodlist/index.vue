@@ -1,5 +1,9 @@
 <template>
   <div class="good-container">
+       <header class="mui-bar mui-bar-nav">
+      <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="/home"></a>
+      <h1 class="mui-title">商品购买</h1>
+    </header>
     <div
       class="good-item"
       v-for="(item,index) in  goodList"
