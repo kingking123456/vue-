@@ -1,9 +1,5 @@
 <template>
   <div class="gooddetail-container">
-    <header class="mui-bar mui-bar-nav">
-      <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="/goodinfo"></a>
-      <h1 class="mui-title">图文介绍</h1>
-    </header>
     <h3 class="gooddetail-title">{{gooddetail.title}}</h3>
     <hr>
     <div v-html="gooddetail.content"></div>

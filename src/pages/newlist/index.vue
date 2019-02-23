@@ -1,9 +1,5 @@
 <template>
   <div class="newlist-container">
-    <header class="mui-bar mui-bar-nav">
-      <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="/home"></a>
-      <h1 class="mui-title">新闻列表</h1>
-    </header>
     <ul class="mui-table-view">
       <!-- <li > -->
       <router-link

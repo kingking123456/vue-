@@ -1,30 +1,29 @@
 <template>
-  <div class="good-container">
-       <header class="mui-bar mui-bar-nav">
-      <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="/home"></a>
-      <h1 class="mui-title">商品购买</h1>
-    </header>
-    <div
-      class="good-item"
-      v-for="(item,index) in  goodList"
-      :key="index"
-      @click="getGoodInfo(item.id)"
-    >
-      <img :src="item.img_url" alt>
-      <h1 class="good-title">{{item.title}}</h1>
-      <div class="good-info">
-        <p class="good-price">
-          <span class="good-now">￥{{ item.sell_price }}</span>
-          <span class="good-old">￥{{ item.market_price }}</span>
-        </p>
-        <p class="good-sell">
-          <span>热卖中</span>
-          <span>{{item.sell_price}}</span>
-        </p>
+  <scroller :on-refresh="refresh" :on-infinite="infinite" 
+  ref="handle" noDataText="客官没有啦！" :snapping="true"  refreshText="用点力往下拉~~"
+   refreshLayerColor="purple" loadingLayerColor="skyblue"> 
+    <div class="good-container">
+      <div
+        class="good-item"
+        v-for="(item,index) in  goodList"
+        :key="index"
+        @click="getGoodInfo(item.id)"
+      >
+        <img :src="item.img_url" alt>
+        <h1 class="good-title">{{item.title}}</h1>
+        <div class="good-info">
+          <p class="good-price">
+            <span class="good-now">￥{{ item.sell_price }}</span>
+            <span class="good-old">￥{{ item.market_price }}</span>
+          </p>
+          <p class="good-sell">
+            <span>热卖中</span>
+            <span>{{item.sell_price}}</span>
+          </p>
+        </div>
       </div>
     </div>
-    <mt-button type="danger" size="large" plain @click="getMore">点击加载更加多</mt-button>
-  </div>
+  </scroller>
 </template>
 <script>
 export default {
@@ -35,32 +34,55 @@ export default {
     };
   },
   created() {
-    this.getGoodList();
+    this.getGoodList()
+  },
+  mounted() {
+    this.$refs.handle.triggerPullToRefresh()
   },
   methods: {
-    getGoodList() {
-      this.$http.get("getgoods?pageindex=" + this.pageIndex).then(result => {
-        console.log(result.body);
-        if (result.body.status == 0) {
-          this.goodList = result.body.message;
-            // for(var i=0;i<this.goodList.length;i++){
-
-            // }
-        }
-      });
+    getGoodList(refresh) {
+      // console.log(refresh)
+      return this.$http
+        .get("getgoods?pageindex=" + this.pageIndex)
+        .then(result => {
+          if (refresh) {
+            this.goodList = result.body.message
+          } else {
+            this.goodList = this.goodList.concat(result.body.message)
+          }
+        })
     },
-    getMore(){
-        this. pageIndex++,
-        this.getGoodList();
-
+    getGoodInfo(id) {
+      this.$router.push("/home/goodinfo/" + id)
     },
-    getGoodInfo(id){
-        this.$router.push('/home/goodinfo/'+id)
+    /* 下拉刷新 */
+    refresh() {
+      //刷新第一页数据
+      // this.goodList = []
+      //重置索引pageIndex为1
+      this.pageIndex = 1;
+      this.getGoodList(true).then(() => {
+        this.$refs.handle.finishPullToRefresh()
+      })
+    },
+    /* 上拉加载 */
+    infinite() {
+      console.log("我在加载。。。。")
+      this.pageIndex++;
+      this.getGoodList().then(() => {
+        this.$refs.handle.finishInfinite(this.goodList.length == 15)
+      })
     }
   }
-};
+}
 </script>
-<style lang="less" scoped>
+<style lang="less">
+.pull-to-refresh-layer {
+  margin-top: -20px !important;
+}
+._v-content {
+  padding-bottom: 40px;
+}
 .good-container {
   padding: 7px;
   display: flex;

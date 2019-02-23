@@ -1,9 +1,5 @@
 <template>
   <div class="goodinfo-container">
-    <header class="mui-bar mui-bar-nav">
-      <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="/goodlist"></a>
-      <h1 class="mui-title">商品详情</h1>
-    </header>
     <!-- 小球动画 -->
     <transition @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter">
       <div class="good-ball" v-show="fullBall" ref="ball"></div>
@@ -34,7 +30,7 @@
           </div>
           <div class="mui-card-footer gooinfo-now">
             <mt-button type="primary" size="small">立即购买</mt-button>
-            <mt-button type="danger" size="small" class="goodcar" @click="goodCarShop(id)">加入购物车</mt-button>
+            <mt-button type="danger" size="small" class="goodcar" @click="goodCarShop">加入购物车</mt-button>
           </div>
         </div>
       </div>
@@ -66,7 +62,7 @@ export default {
       goodInfo: {},
       byCount: 1,
       fullBall: false,
-      flag:true
+      selectedCount:1 // 默认用户选择1个
     };
   },
   created() {
@@ -97,14 +93,19 @@ export default {
         this.byCount = this.goodInfo.stock_quantity;
       }
     },
-    goodCarShop(id) {
-       if(this.flag){
-            this.fullBall = !this.fullBall;
-       }
-     
+    goodCarShop() {
+      this.fullBall = !this.fullBall;
+      /* 拼接处一个要保存到store中car里面对象 */
+      let goodInfo = {
+        id: this.id,
+        count: this.byCount,
+        price: this.goodInfo.sell_price,
+        selected: true
+      }
+      this.$store.commit("addToCar", goodInfo)
     },
     beforeEnter(el) {
-        this.flag=false
+      this.flag = false;
       //表示动画入场之前，坐标表示位置是在起始位置不动
       //在一次入场动画执行完成之后，在最终位置停下来并不在起始位置，通过这里的位置的设置可以将入场动画结束时的位置调到这里
       el.style.transform = "translate(0,0)";
@@ -136,13 +137,7 @@ export default {
       //done是enter方法的原生的引用函数名，这里表示是回调函数，也就是接下来执行的操作aEnter（），消灭延迟效果。
     },
     afterEnter(el) {
-
-
-   
-        
-         this.fullBall = !this.fullBall;
-          this.flag=true
-    
+      this.fullBall = !this.fullBall;
     },
     getGoodDetail(id) {
       this.$router.push("/home/gooddetail/" + id);

@@ -18,7 +18,7 @@
   </div>
 </template>
 <script>
-import { Toast } from "mint-ui";
+import { Toast } from "mint-ui"
 export default {
   data() {
     return {
@@ -28,7 +28,7 @@ export default {
     };
   },
   created() {
-    this.getCommont();
+    this.getCommont()
   },
   methods: {
     getCommont() {
@@ -48,12 +48,11 @@ export default {
       this.getCommont()
     },
     postCommont(){
-        console.log(1111)
         if(this.msg.trim().length==0) return Toast("评论数据不能为空")
         this.$http.post('postcomment/'+this.id,{
           content:this.msg.trim()
         }).then(result=>{
-          console.log(result)
+          
          if(result.body.status==0)
               // var addCon ={
               //   user_name:"匿名用户",

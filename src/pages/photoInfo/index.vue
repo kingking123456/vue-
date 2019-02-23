@@ -1,10 +1,5 @@
 <template>
-
   <div class="photoinfo-container">
-     <header class="mui-bar mui-bar-nav">
-      <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="/photoInfo"></a>
-      <h1 class="mui-title">图片详情</h1>
-    </header>
     <h3>{{photoInfo.title}}</h3>
     <div class="subtitle">
       <span>发表时间:{{photoInfo.add_time}}</span>
@@ -55,13 +50,13 @@ export default {
         console.log(result.body);
         if (result.body.status == 0) {
           this.photoInfoList = result.body.message;
-          for(let i=0;i<this.photoInfoList.length;i++){
-              this.photoInfoList[i].w=600
-              this.photoInfoList[i].h=400
+          for (let i = 0; i < this.photoInfoList.length; i++) {
+            this.photoInfoList[i].w = 600;
+            this.photoInfoList[i].h = 400;
           }
-        }else{
-            this.photoInfoList=[]
-          }
+        } else {
+          this.photoInfoList = [];
+        }
       });
     }
   }

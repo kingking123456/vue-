@@ -1,9 +1,5 @@
 <template>
   <div class="newinfo-container">
-    <header class="mui-bar mui-bar-nav">
-      <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="/newlist"></a>
-      <h1 class="mui-title">详情列表</h1>
-    </header>
     <!-- 大标题 -->
     <h3 class="title">{{ newInfos.title}}</h3>
     <!-- 子标题 -->
