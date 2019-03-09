@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <mt-header fixed title="vue移动商城项目"></mt-header>
+    <mt-header fixed title="vue移动商城项目">
+      <mt-button icon="back" slot="left" v-show="hasBackBtn" @click="$router.go(-1)">返回</mt-button>
+    </mt-header>
     <transition name="app">
       <router-view></router-view>
     </transition>
@@ -29,7 +31,21 @@
 
 <script>
 export default {
-  
+  data() {
+    return {
+      hasBackBtn: this.$route.path !== "/home"
+    };
+  },
+  watch: {
+    $route(to, from) {
+      console.log(to, from);
+      if (to.path === "/home") {
+        this.hasBackBtn = false;
+      } else {
+        this.hasBackBtn = true;
+      }
+    }
+  }
 };
 </script>
 
@@ -39,47 +55,45 @@ export default {
   padding-bottom: 50px;
   overflow-x: hidden;
 }
-.app-enter{
-  opacity:0 ;
-  transform:translateX(100%);
-  
+.app-enter {
+  opacity: 0;
+  transform: translateX(100%);
 }
-.app-leave-to{
+.app-leave-to {
   opacity: 0;
   transform: translateX(-100%);
   position: absolute;
- 
 }
 .app-enter-active,
-.app-leave-active{
+.app-leave-active {
   transition: all 0.2s ease;
 }
 /* mui样式造成不能切换 */
-.mui-bar-tab .mui-tab-item1.mui-active{
+.mui-bar-tab .mui-tab-item1.mui-active {
   color: #007aff;
 }
 .mui-bar-tab .mui-tab-item1 {
-    display: table-cell;
-    overflow: hidden;
-    width: 1%;
-    height: 50px;
-    text-align: center;
-    vertical-align: middle;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    color: #929292;
+  display: table-cell;
+  overflow: hidden;
+  width: 1%;
+  height: 50px;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #929292;
 }
 .mui-bar-tab .mui-tab-item1 .mui-icon {
-    top: 3px;
-    width: 24px;
-    height: 24px;
-    padding-top: 0;
-    padding-bottom: 0;
+  top: 3px;
+  width: 24px;
+  height: 24px;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 .mui-bar-tab .mui-tab-item1 .mui-icon ~ .mui-tab-label {
-    font-size: 11px;
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  font-size: 11px;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
